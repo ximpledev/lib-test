@@ -73,8 +73,13 @@ to remove dist/ every time before building
 now dist/index.js is transpiled
 
 - modify package.json
-to let npm know what the primary main entry point is
+to let npm know what the primary entry point is
 
 "main": "index.js",
 =>
 "main": "dist/index.js",
+
+c.f.,
+app-test doesn't have to worry about it,
+only libs, such as: lit-test,
+have to use "main" to locate its primary entry point
