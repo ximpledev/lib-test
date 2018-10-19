@@ -2,8 +2,10 @@
   "name": "lib-test",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "prebuild": "rm -rf dist/",
+    "build": "babel src/ -d dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/ximpledev/lib-test/issues"
   },
-  "homepage": "https://github.com/ximpledev/lib-test#readme"
+  "homepage": "https://github.com/ximpledev/lib-test#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0"
+  }
 }
