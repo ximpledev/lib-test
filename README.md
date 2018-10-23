@@ -120,3 +120,75 @@ the order below won't work...
 4. app-test calls > npm unlink lib-test
 
 be careful!
+
+-----
+
+(4. Webpack alias, which is used by app-test)
+
+-----
+
+5. lib's own dependencies
+add more dependencies to lib-test,
+and test if after app-test 'npm i',
+those dependencies are added automatically, or not.
+
+- choose a lib for lib-test to use
+first, I choose 'lodash' cuz it's most commonly used
+but also cuz it's too popular, babel uses it as well
+(that is, when installing babel, lodash is installed as well)
+so, instead, I choose 'moment' to test
+
+- the idea is, modify index.js to use moment
+then see if app-test automatically add moment as dependency or not
+
+- two approaches to test: 'npm link' and 'npm i'
+
+5-1. npm link
+
+- don't
+> npm i moment
+in lib-test
+
+> npm link
+
+go to app-test
+> npm link lib-test
+> npm start
+to see if it works without installing moment
+
+no, it can't
+now install moment in app-test
+> npm i moment
+> npm start
+no, it still can't
+
+ok, uninstall moment in app-test first
+> npm un moment
+
+go back to lib-test
+> npm i moment
+
+don't have to
+> npm run build
+agin
+
+go to app-test
+> npm start
+it works!
+
+to sum up
+when using 'npm link'
+"we have to install lib-test's dependency", such as: moment
+then app-test, without installing moment, can use lib-test
+
+-----
+
+5-2. npm i
+
+first, uninstall moment
+
+lib-test
+> npm un moment
+> npm run build
+commit & push
+
