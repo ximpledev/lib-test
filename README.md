@@ -46,6 +46,14 @@ node_modules/
 - move index.js to src/index.js
 (cuz we want to use src/ to put ES6 code and dist/ to put Babel-transpiled code)
 
+- change its content from module.exports (CommonJS) to export (ES6)
+
+function greet(name) {
+  return `Hi hi, ${name}!`;
+}
+
+export default greet;
+
 - modify package.json
 "scripts": {
   "build": "babel src/ -d dist/",
@@ -83,3 +91,32 @@ c.f.,
 app-test doesn't have to worry about it,
 only libs, such as: lit-test,
 have to use "main" to locate its primary entry point
+
+-----
+
+p.s.,
+We can see the global symlink that was created by running:
+> ls -al $(npm root -g)
+
+and the local symlink that was created by running:
+> ls -al ./node_modules
+(which is used by app-test)
+
+-----
+
+if app-test wants to unlink from lib-test,
+lib-test can't call 'unlink' before app-test call 'unlink lib-test'
+that is, we have to follow the order below...
+
+1. lib-test calls > npm link
+2. app-test calls > npm link lib-test
+3. app-test calls > npm unlink lib-test
+4. lib-test calls > npm unlink
+
+the order below won't work...
+1. lib-test calls > npm link
+2. app-test calls > npm link lib-test
+3. lib-test calls > npm unlink
+4. app-test calls > npm unlink lib-test
+
+be careful!
