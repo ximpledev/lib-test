@@ -23,5 +23,7 @@
     "babel-core": "^6.26.3",
     "babel-env": "^2.4.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "moment": "^2.22.2"
+  }
 }

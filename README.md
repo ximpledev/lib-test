@@ -190,5 +190,30 @@ first, uninstall moment
 lib-test
 > npm un moment
 > npm run build
-commit & push
+although moment hasn't been installed, it's ok to build successfully
+then commit & push
 
+go to app-test
+modify package.json
+"dependencies": {
+  "lib-test": "git+https://github.com/ximpledev/lib-test.git"
+}
+
+> npm i
+notice that, moment isn't automatically installed after installing lib-test
+
+> npm start
+no, it doesn't work, moment module can't be find
+
+- go back to lib-test
+> npm i moment
+now in package.json
+"dependencies": {
+  "moment": "^2.22.2"
+}
+
+- don't have to
+> npm run build
+(cuz the point is package.json has been updated, not the content in dist/)
+
+- commit & push
