@@ -141,6 +141,14 @@ so, instead, I choose 'moment' to test
 - the idea is, modify index.js to use moment
 then see if app-test automatically add moment as dependency or not
 
+import moment from 'moment';
+
+function greet(name) {
+  return `Hello ${name}, it's ${moment().format('YYYY/MM/DD HH:mm:ss')}!`;
+}
+
+export default greet;
+
 - two approaches to test: 'npm link' and 'npm i'
 
 5-1. npm link
@@ -165,7 +173,7 @@ no, it still can't
 ok, uninstall moment in app-test first
 > npm un moment
 
-go back to lib-test
+go back to lib-test, and install moment
 > npm i moment
 
 don't have to
@@ -178,8 +186,8 @@ it works!
 
 to sum up
 when using 'npm link'
-"we have to install lib-test's dependency", such as: moment
-then app-test, without installing moment, can use lib-test
+"we have to install the module in lib-test", such as: moment module
+then app-test, without installing that module, can use lib-test
 
 -----
 
@@ -217,3 +225,39 @@ now in package.json
 (cuz the point is package.json has been updated, not the content in dist/)
 
 - commit & push
+
+- go to app-test
+> npm start
+can't work cuz still, moment can't be find
+
+> npm update
+moment module has been installed in node_modules/
+but not appear in package.json dependencies
+
+> npm start
+it works!
+
+and now, interestingly,
+if we
+> npm un moment
+we can't uninstall moment module in node_modules/
+cuz moment module desn't in package.json
+
+but if we uninstall lib-test
+moment modules will be uninstall as well.
+
+- to sum up
+first,
+we have to install the module (such as: moment)
+whether using 'npm link' or 'npm i'
+
+then,
+the difference between 'npm link' & 'npm i' is...
+
+when using 'npm link',
+app-test doesn't install the module in node_modules/
+
+but when using 'npm i',
+app-test installs the lib-test's dependent module
+to app-test's node_modeles/,
+but not appear in app-test's package.json
